@@ -28,10 +28,10 @@ jobs:
     - name: Run script
       run: python ${{ github.workspace }}/collect_ips.py
         
-    - name: Commit and push changes
+    - name: Commit 和 push changes
       run: |
-        git config --global user.email "baolw50@gmail.com"
-        git config --global user.name "jc-lw"
+        git config --global user.email "16044635@qq.com"
+        git config --global user.name "lxhfans2024"
         if [ -n "$(git status --porcelain)" ]; then
           git add ip.txt
           git commit -m "Automatic update"
