@@ -69,7 +69,7 @@ if __name__ == "__main__":
     subdomain_ip_mapping = {
         'bestcf': 'https://ipdb.030101.xyz/api/bestcf.txt',
         '@': 'https://raw.githubusercontent.com/lxhfans2024/djgyus/refs/heads/main/ip.txt',
-        'api': 'https://www.wetest.vip/page/cloudflare/address_v6.html',
+        'api': 'https://raw.githubusercontent.com/lxhfans2024/djgyus/refs/heads/main/ip.txt',
     }
     
     try:
