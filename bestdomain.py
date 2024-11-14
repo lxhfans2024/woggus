@@ -68,8 +68,8 @@ if __name__ == "__main__":
     
     subdomain_ip_mapping = {
         'bestcf': 'https://ipdb.030101.xyz/api/bestcf.txt',
-        '@': 'https://raw.githubusercontent.com/lxhfans2024/djgyus/refs/heads/main/ip.txt',
-        'api': 'https://raw.githubusercontent.com/lxhfans2024/djgyus/refs/heads/main/ip.txt',
+        '@': 'https://raw.githubusercontent.com/lxhfans2024/woggus/refs/heads/main/ip.txt',
+        'api': 'https://raw.githubusercontent.com/lxhfans2024/woggus/refs/heads/main/ip.txt',
     }
     
     try:
