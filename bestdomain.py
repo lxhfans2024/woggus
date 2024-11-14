@@ -1,10 +1,15 @@
 import os
+import time
 import requests
 
 def get_ip_list(url):
-    response = requests.get(url)
-    response.raise_for_status()
-    return response.text.strip().split('\n')
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.text.strip().split('\n')
+    except requests.RequestException as e:
+        print(f"Failed to get IP list from {url}: {e}")
+        return []
 
 def get_cloudflare_zone(api_token):
     headers = {
@@ -54,28 +59,25 @@ def update_cloudflare_dns(ip_list, api_token, zone_id, subdomain, domain):
             print(f"Add {subdomain}:{ip}")
         else:
             print(f"Failed to add A record for IP {ip} to subdomain {subdomain}: {response.status_code} {response.text}")
+        time.sleep(1)  # 增加延迟避免速率限制
 
 if __name__ == "__main__":
     api_token = os.getenv('CF_API_TOKEN')
+    if not api_token:
+        raise Exception("CF_API_TOKEN is not set in the environment variables.")
     
-    # 示例URL和子域名对应的IP列表
     subdomain_ip_mapping = {
-        'bestcf': 'https://ipdb.030101.xyz/api/bestcf.txt',  # #域名一，bestcf.域名.com 
-        '@': 'https://raw.githubusercontent.com/lxhfans2024/woggus/refs/heads/main/ip.txt',
-        'api': 'https://raw.githubusercontent.com/lxhfans2024/woggus/refs/heads/main/ip.txt', #域名二，api.域名.com
-        # 添加更多子域名和对应的IP列表URL
+        'bestcf': 'https://ipdb.030101.xyz/api/bestcf.txt',
+        '@': 'https://raw.githubusercontent.com/lxhfans2024/djgyus/refs/heads/main/ip.txt',
+        'api': 'https://www.wetest.vip/page/cloudflare/address_v6.html',
     }
     
     try:
-        # 获取Cloudflare域区ID和域名
         zone_id, domain = get_cloudflare_zone(api_token)
         
         for subdomain, url in subdomain_ip_mapping.items():
-            # 获取IP列表
             ip_list = get_ip_list(url)
-            # 删除现有的DNS记录
             delete_existing_dns_records(api_token, zone_id, subdomain, domain)
-            # 更新Cloudflare DNS记录
             update_cloudflare_dns(ip_list, api_token, zone_id, subdomain, domain)
             
     except Exception as e:
